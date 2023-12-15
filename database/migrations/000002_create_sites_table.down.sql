@@ -1,0 +1,3 @@
+ALTER TABLE sites DROP CONSTRAINT url_uniq; 
+
+DROP TABLE sites;
