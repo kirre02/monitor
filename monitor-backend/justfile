@@ -1,0 +1,2 @@
+build:
+    nix build --no-link --print-build-logs
