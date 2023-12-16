@@ -20,12 +20,14 @@ type AddParams struct {
 	url string `json:"url"`
 }
 
+type Service struct {
+	db *sqlx.DB
+}
+
 func (s *Service) Add(ctx context.Context, p *AddParams) (*Site, error) {
 	site := &Site{url: p.url}
 	return site, nil
 }
 
-type Service struct {
-	db *sqlx.DB
-}
+
 
