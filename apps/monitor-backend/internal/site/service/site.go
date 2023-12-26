@@ -1,9 +1,9 @@
-package site
+package service
 
 import (
 	"context"
+	"fmt"
 
-	"github.com/charmbracelet/log"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -12,76 +12,82 @@ type Site struct {
 	Id int `json:"id"`
 	// the Url of the site
 	Url string `json:"Url"`
+	// name of the site
+	Name string `json:"Name"`
 }
 
 // The params for adding a site to be monitored
 type AddParams struct {
 	// Url is the Url of the site that we want to be monitored
 	Url string `json:"Url"`
+	// name of the site that user wants to call it
+	Name string `json"name"`
 }
 
 type Service struct {
-	DB     *sqlx.DB
-	Logger log.Logger
+	DB *sqlx.DB
+	// Other fields...
 }
 
-func NewSiteService(db *sqlx.DB, logger log.Logger) *Service {
-	return &Service{
-		DB:     db,
-		Logger: logger,
-	}
+// Function to initialize the Service with a valid DB connection
+func NewSiteService(db *sqlx.DB) *Service {
+	return &Service{DB: db}
 }
 
 func (s *Service) Add(ctx context.Context, p *AddParams) (*Site, error) {
-	s.Logger.Info("Adding website...")
+	// Check if AddParams pointer is not nil
+	if p == nil {
+		return nil, fmt.Errorf("AddParams cannot be nil")
+	}
 
-	site := &Site{Url: p.Url}
-	_, err := s.DB.NamedExecContext(ctx, "INSERT INTO sites (Url) VALUES (:Url)", site)
+	// Check if URL or Name is empty in AddParams
+	if p.Url == "" || p.Name == "" {
+		return nil, fmt.Errorf("URL and Name cannot be empty")
+	}
+
+	site := &Site{Url: p.Url, Name: p.Name}
+
+	if s.DB == nil {
+		return nil, fmt.Errorf("DB connection is nil")
+	}
+
+	_, err := s.DB.NamedExecContext(ctx, "INSERT INTO sites (Url, Name) VALUES (:Url, :Name)", site)
 	if err != nil {
-		s.Logger.Error("Failed to add website", "error", err)
 		return nil, err
 	}
 
-	s.Logger.Info("Website was successfully added")
 	return site, nil
 }
 
 func (s *Service) Get(ctx context.Context, siteID int) (*Site, error) {
 	var site Site
 
-	s.Logger.Info("Fetching website...")
 	err := s.DB.GetContext(ctx, &site, "SELECT id, Url FROM sites WHERE id = $1", siteID)
 	if err != nil {
-		s.Logger.Error("Failed fetching website", err)
 		return nil, err
 	}
 
-	s.Logger.Info("Website successfully retrieved")
 	return &site, nil
 }
 
 func (s *Service) Delete(ctx context.Context, SiteID int) error {
 	_, err := s.DB.ExecContext(ctx, "DELETE FROM sites WHERE id = $1", SiteID)
 
-	s.Logger.Info("Website successfully deleted")
 	return err
 }
 
 type ListResponse struct {
-	//sites is the list of monitored sites.
+	// sites is the list of monitored sites.
 	Sites []*Site `json:sites`
 }
 
 func (s *Service) List(ctx context.Context) (*ListResponse, error) {
 	var sites []*Site
 
-	s.Logger.Info("Fetching website list...")
 	err := s.DB.SelectContext(ctx, &sites, "SELECT id, Url FROM sites")
 	if err != nil {
-		s.Logger.Error("Failed to fetch site list", "error", err)
 		return nil, err
 	}
 
-	s.Logger.Info("Site list retrieved successfully")
 	return &ListResponse{Sites: sites}, nil
 }
