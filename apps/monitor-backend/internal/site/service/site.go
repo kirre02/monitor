@@ -20,13 +20,19 @@ type Site struct {
 type AddParams struct {
 	// Url is the Url of the site that we want to be monitored
 	Url string `json:"Url"`
-	// name of the site that user wants to call it
-	Name string `json"name"`
+	// Name of the site that user wants to call it
+	Name string `json:"Name"`
+}
+
+type SiteServiceInterface interface {
+	Add(ctx context.Context, p *AddParams) (*Site, error)
+	Get(ctx context.Context, siteID int) (*Site, error)
+	List(ctx context.Context) (*ListResponse, error)
+	Delete(ctx context.Context, SiteID int) error
 }
 
 type Service struct {
 	DB *sqlx.DB
-	// Other fields...
 }
 
 // Function to initialize the Service with a valid DB connection
@@ -78,7 +84,7 @@ func (s *Service) Delete(ctx context.Context, SiteID int) error {
 
 type ListResponse struct {
 	// sites is the list of monitored sites.
-	Sites []*Site `json:sites`
+	Sites []*Site `json:"sites"`
 }
 
 func (s *Service) List(ctx context.Context) (*ListResponse, error) {
