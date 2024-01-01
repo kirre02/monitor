@@ -1,4 +1,4 @@
-package site
+package handler
 
 import (
 	"encoding/json"
@@ -6,18 +6,19 @@ import (
 	"strconv"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/kirre02/monitor-backend/internal/site/service"
 )
 
 type SiteHandler struct {
-	Service *Service
+	Service service.SiteServiceInterface
 }
 
 func (sh *SiteHandler) AddSite(w http.ResponseWriter, r *http.Request) {
-	var params AddParams
+	var params service.AddParams
 
 	err := json.NewDecoder(r.Body).Decode(&params)
 	if err != nil {
-		http.Error(w, "invalid payload", http.StatusBadRequest)
+		http.Error(w, "Invalid payload", http.StatusBadRequest)
 		return
 	}
 
