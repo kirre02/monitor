@@ -2,11 +2,16 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
+	"time"
 
 	"github.com/charmbracelet/log"
+	"github.com/go-chi/chi/v5"
 	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
+	"github.com/kirre02/monitor-backend/internal/site/handler"
+	"github.com/kirre02/monitor-backend/internal/site/service"
 	_ "github.com/lib/pq"
 )
 
@@ -17,6 +22,29 @@ func main() {
 	}
 
 	defer db.Close()
+
+	siteSvc := service.NewSiteService(db)
+	siteHandler := &handler.SiteHandler{
+		Service: siteSvc,
+	}
+
+	router := chi.NewRouter()
+
+	router.Mount("/api/v1", siteHandler.Routes())
+
+	address := "0.0.0.0:9090"
+
+	srv := &http.Server{
+		Addr:              address,
+		Handler:           router,
+		ReadTimeout:       5 * time.Second, // Adjust the timeouts as needed
+		ReadHeaderTimeout: 5 * time.Second,
+		WriteTimeout:      10 * time.Second,
+		IdleTimeout:       15 * time.Second,
+	}
+
+	log.Infof("Starting server at: %s", address)
+	log.Fatal(srv.ListenAndServe())
 }
 
 func initDB() (*sqlx.DB, error) {

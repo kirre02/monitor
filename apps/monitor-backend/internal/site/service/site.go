@@ -57,7 +57,7 @@ func (s *Service) Add(ctx context.Context, p *AddParams) (*Site, error) {
 		return nil, fmt.Errorf("DB connection is nil")
 	}
 
-	_, err := s.DB.NamedExecContext(ctx, "INSERT INTO sites (Url, Name) VALUES (:Url, :Name)", site)
+	_, err := s.DB.NamedExecContext(ctx, "INSERT INTO sites (url, name) VALUES (:url, :name)", site)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func (s *Service) Add(ctx context.Context, p *AddParams) (*Site, error) {
 func (s *Service) Get(ctx context.Context, siteID int) (*Site, error) {
 	var site Site
 
-	err := s.DB.GetContext(ctx, &site, "SELECT id, Url FROM sites WHERE id = $1", siteID)
+	err := s.DB.GetContext(ctx, &site, "SELECT id, url, name FROM sites WHERE id = $1", siteID)
 	if err != nil {
 		return nil, err
 	}
