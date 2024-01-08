@@ -273,7 +273,6 @@ func TestSiteService_Delete(t *testing.T) {
 			},
 			wantErr: true,
 		},
-		// Add more test cases here if needed
 	}
 
 	for _, tt := range tests {
