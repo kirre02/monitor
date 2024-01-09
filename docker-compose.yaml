@@ -1,8 +1,8 @@
 
 version: '3.9'
 services:
-  auth-db:
-    container_name: localdb
+  mondb:
+    container_name: mondb
     image: 'postgres:15.2-alpine'
     restart: unless-stopped
     ports:
