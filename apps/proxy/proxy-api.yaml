@@ -1,0 +1,208 @@
+openapi: "3.0.0"
+
+info:
+  version: 0.1.0
+  title: Monitor Proxy API
+  description: basix API proxy for Monitor
+
+servers:
+  - url: http://localhost:9090
+  
+tags:
+  - name: site
+    description: handles sites that are added
+  - name: check
+    description: checks the sites added
+
+paths:
+  /proxy-api.yaml:
+    get:
+      operationId: getProxy
+      responses:
+        default:
+          description: returns the proxy API schema
+          content:
+            application/file:
+              schema:
+                $ref: '#/components/schemas/AnyValue'
+  /doc:
+    get:
+      operationId: getDoc
+      responses:
+        default:
+          description: get the documentation for proxy api
+          content:
+            application/html:
+              schema:
+                $ref: '#/components/schemas/AnyValue'
+  /api/v1/site:
+    post:
+      tags: 
+        - site
+      description: adds a site to be monitored
+      operationId: addSite
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SiteAddRequest'
+      responses:
+        '201':
+          description: site response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteAddResponse'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+  /api/v1/sites:
+    get:
+      tags:
+        - site
+      description: Gets a list sites
+      operationId: getSites
+      responses:
+        '200':
+          description: site response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteGetResponse'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+
+  /api/v1/sites/{id}/:
+    get:
+      tags:
+        - site
+      description: Gets a site
+      operationId: getSite
+      parameters:
+        - name: id
+          in: path
+          description: 
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Site response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Site'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+  /api/v1/site/{id}/:
+    delete:
+      tags:
+        - site
+      description: deletes a site
+      operationId: deleteSite
+      parameters:
+        - name: id
+          in: path
+          description: 
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Site response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Site'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+  
+components:
+  schemas:
+    ErrorResult:
+      type: object
+      required:
+        - error
+      properties:
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+
+    AnyValue:
+        anyOf:
+          - type: string
+          - type: number
+          - type: integer
+          - type: boolean
+          - type: array
+            items: { }
+          - type: object
+  
+    Site:
+      type: object
+      required:
+       - id
+       - url 
+       - name 
+      properties:
+        id:
+         type: integer
+        url:
+          type: string
+        name:
+          type: string
+  
+    # HTTP Models
+    SiteGetResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorResult'
+        result:
+          type: object
+          properties:
+            site:
+              $ref: '#/components/schemas/Site'
+
+    SiteAddRequest:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+        name:
+          type: string
+    
+    SiteAddResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorResult'
+        result:
+          type: object
+          required:
+            - site
+          properties:
+            site:
+              $ref: '#/components/schemas/Site'

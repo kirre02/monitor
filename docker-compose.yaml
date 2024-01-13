@@ -1,6 +1,23 @@
 
 version: '3.9'
 services:
+  # api:
+  #   container_name: monitor_api
+  #   build:
+  #     context: ./apps/monitor-backend/
+  #     dockerfile: Dockerfile
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "9090:9090"
+  proxy:
+    container_name: monitor_proxy
+    image: 'nginx:1.25'
+    volumes:
+      - ./apps/proxy/nginx:/etc/nginx/conf.d/:ro
+      - ./apps/proxy/docs:/usr/share/nginx/html
+    ports:
+      - "4000:80"
   mondb:
     container_name: mondb
     image: 'postgres:15.2-alpine'
