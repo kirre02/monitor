@@ -20,8 +20,8 @@ FROM alpine:3.19.0
 WORKDIR /api/
 
 COPY --from=Build-stage /build/monitor-backend ./bin/monitor-backend
-
+COPY --from=Build-stage /build/.env.dev /api/
 
 EXPOSE 9090
 
-CMD ["./bin/monitor-api"]
+CMD ["./bin/monitor-backend"]

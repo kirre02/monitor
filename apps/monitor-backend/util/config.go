@@ -16,13 +16,12 @@ type Config struct {
 	PostgresPassword string `mapstructure:"POSTGRES_PASSWORD"`
 	PostgresDb       string `mapstructure:"POSTGRES_DB"`
 	PostgresSslmode  string `mapstructure:"POSTGRES_SSLMODE"`
-	DatabaseDriver   string `mapstructure:"DB_DRIVER"`
 }
 
 // LoadConfig reads configuration from file or environment variables.
 func LoadConfig(path string) (config Config, err error) {
 	viper.AddConfigPath(path)
-	viper.SetConfigName(".env")
+	viper.SetConfigName(".env.dev")
 	viper.SetConfigType("env")
 
 	viper.AutomaticEnv()

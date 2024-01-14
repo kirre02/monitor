@@ -20,7 +20,7 @@ import (
 )
 
 func main() {
-	config, err := util.LoadConfig("../../")
+	config, err := util.LoadConfig(".")
 	if err != nil {
 		log.Fatal("cannot load config")
 	}
@@ -84,18 +84,22 @@ func runMigrations(databaseURL, migrationPath string) error {
 }
 
 func initDB() (*sqlx.DB, error) {
-	config, err := util.LoadConfig("../../")
+	config, err := util.LoadConfig(".")
 	if err != nil {
-		log.Fatal("cannot load config")
+		log.Errorf("cannot load config: %v", err)
+		return nil, err
 	}
 
-	uri := config.DatabaseUrl
-	db, err := sqlx.Connect("postgres", uri)
+	uri := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+		config.PostgresHost, config.PostgresPort, config.PostgresUser, config.PostgresPassword, config.PostgresDb, config.PostgresSslmode)
+
+	db, err := sqlx.Open("postgres", uri)
 	if err != nil {
 		return nil, fmt.Errorf("not able to connect to postgres: \nuri: %s\nerror:%v", uri, err)
 	}
 
 	if err = db.Ping(); err != nil {
+		db.Close() // Close the database connection if Ping fails
 		return nil, fmt.Errorf("unable to ping postgres \nuri: %s\nerror:%v", uri, err)
 	}
 

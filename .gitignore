@@ -1,4 +1,4 @@
-/.env
+.env*
 /.direnv
 postgresData
 node_modules
