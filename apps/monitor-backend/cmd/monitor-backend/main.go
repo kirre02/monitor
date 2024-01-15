@@ -3,19 +3,28 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"os"
 	"time"
+
+	_ "github.com/lib/pq"
+
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
+	"github.com/jmoiron/sqlx"
+	"github.com/kirre02/monitor-backend/internal/site/handler"
+	"github.com/kirre02/monitor-backend/internal/site/service"
+	"github.com/kirre02/monitor-backend/util"
 
 	"github.com/charmbracelet/log"
 	"github.com/go-chi/chi/v5"
-	"github.com/jmoiron/sqlx"
-	"github.com/joho/godotenv"
-	"github.com/kirre02/monitor-backend/internal/site/handler"
-	"github.com/kirre02/monitor-backend/internal/site/service"
-	_ "github.com/lib/pq"
 )
 
 func main() {
+	config, err := util.LoadConfig(".")
+	if err != nil {
+		log.Fatal("cannot load config")
+	}
+
 	db, err := initDB()
 	if err != nil {
 		log.Fatal(err)
@@ -43,34 +52,54 @@ func main() {
 		IdleTimeout:       15 * time.Second,
 	}
 
+	go runMigrations(config.DatabaseUrl, config.MigrationPath)
+
 	log.Infof("Starting server at: %s", address)
 	log.Fatal(srv.ListenAndServe())
 }
 
-func initDB() (*sqlx.DB, error) {
-	err := godotenv.Load("../../.env")
+func runMigrations(databaseURL, migrationPath string) error {
+	db, err := initDB()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		return err
 	}
 
-	// Get environment variables
-	host := os.Getenv("POSTGRES_HOST")
-	port := os.Getenv("POSTGRES_PORT")
-	user := os.Getenv("POSTGRES_USER")
-	password := os.Getenv("POSTGRES_PASSWORD")
-	dbName := os.Getenv("POSTGRES_DB")
-	sslMode := os.Getenv("POSTGRES_SSLMODE")
+	driver, err := postgres.WithInstance(db.DB, &postgres.Config{})
+	if err != nil {
+		return err
+	}
 
-	// Build connection string
+	// Create a migration source
+	m, err := migrate.NewWithDatabaseInstance(migrationPath, "postgres", driver)
+	if err != nil {
+		return err
+	}
+
+	err = m.Up()
+	if err != nil && err != migrate.ErrNoChange {
+		return err
+	}
+
+	return nil
+}
+
+func initDB() (*sqlx.DB, error) {
+	config, err := util.LoadConfig(".")
+	if err != nil {
+		log.Errorf("cannot load config: %v", err)
+		return nil, err
+	}
+
 	uri := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
-		host, port, user, password, dbName, sslMode)
+		config.PostgresHost, config.PostgresPort, config.PostgresUser, config.PostgresPassword, config.PostgresDb, config.PostgresSslmode)
 
-	db, err := sqlx.Connect("postgres", uri)
+	db, err := sqlx.Open("postgres", uri)
 	if err != nil {
 		return nil, fmt.Errorf("not able to connect to postgres: \nuri: %s\nerror:%v", uri, err)
 	}
 
 	if err = db.Ping(); err != nil {
+		db.Close() // Close the database connection if Ping fails
 		return nil, fmt.Errorf("unable to ping postgres \nuri: %s\nerror:%v", uri, err)
 	}
 

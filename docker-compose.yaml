@@ -1,6 +1,27 @@
 
 version: '3.9'
 services:
+  api:
+    container_name: monitor_api
+    build:
+      context: ./apps/monitor-backend/
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+    networks:
+      - monitor-network
+    depends_on:
+      - mondb
+  proxy:
+    container_name: monitor_proxy
+    image: 'nginx:1.25'
+    volumes:
+      - ./apps/proxy/nginx:/etc/nginx/conf.d/:ro
+      - ./apps/proxy/docs:/usr/share/nginx/html
+    ports:
+      - "4000:80"
+    networks:
+      - monitor-network
   mondb:
     container_name: mondb
     image: 'postgres:15.2-alpine'
@@ -8,9 +29,15 @@ services:
     ports:
       - 5432:5432
     env_file:
-      - .env
+      - .env.db
     volumes:
       - './postgresData:/var/lib/postgresql/data'
+    networks:
+      - monitor-network
 
 volumes:
   postgresData:
+
+networks:
+  monitor-network:
+    driver: bridge

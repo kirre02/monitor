@@ -85,7 +85,7 @@ func (sh *SiteHandler) Routes() chi.Router {
 	r.Get("/sites/{id}", sh.GetSite)
 	r.Get("/sites", sh.ListSites)
 	r.Post("/site", sh.AddSite)
-	r.Delete("/sites/{id}", sh.DeleteSite)
+	r.Delete("/site/{id}", sh.DeleteSite)
 
 	return r
 }

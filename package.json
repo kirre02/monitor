@@ -1,10 +1,11 @@
 {
     "name": "monitor",
     "version": "0.1.0",
-     "contributors":
+    "contributors": [
       {
         "name": "Erik",
         "url": "https://github.com/kirre02"
-      },
+      }
+    ],
     "license": ""
 }
