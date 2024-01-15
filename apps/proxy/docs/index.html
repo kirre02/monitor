@@ -2074,7 +2074,7 @@ $(document).ready(function() {
                         <p class="marked">deletes a site</p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/v1/site/{id}/</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/v1/site/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -2098,7 +2098,7 @@ $(document).ready(function() {
                           <div class="tab-pane active" id="examples-Site-deleteSite-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X DELETE \
  -H "Accept: application/json" \
- "http://localhost:9090/api/v1/site/{id}/"
+ "http://localhost:9090/api/v1/site/{id}"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Site-deleteSite-0-java">
@@ -2115,7 +2115,7 @@ public class SiteApiExample {
 
         // Create an instance of the API class
         SiteApi apiInstance = new SiteApi();
-        Long id = 789; // Long | 
+        Integer id = 56; // Integer | 
 
         try {
             Site result = apiInstance.deleteSite(id);
@@ -2134,7 +2134,7 @@ public class SiteApiExample {
 
 final api_instance = DefaultApi();
 
-final Long id = new Long(); // Long | 
+final Integer id = new Integer(); // Integer | 
 
 try {
     final result = await api_instance.deleteSite(id);
@@ -2152,7 +2152,7 @@ try {
 public class SiteApiExample {
     public static void main(String[] args) {
         SiteApi apiInstance = new SiteApi();
-        Long id = 789; // Long | 
+        Integer id = 56; // Integer | 
 
         try {
             Site result = apiInstance.deleteSite(id);
@@ -2173,7 +2173,7 @@ public class SiteApiExample {
 
 // Create an instance of the API class
 SiteApi *apiInstance = [[SiteApi alloc] init];
-Long *id = 789; //  (default to null)
+Integer *id = 56; //  (default to null)
 
 [apiInstance deleteSiteWith:id
               completionHandler: ^(Site output, NSError* error) {
@@ -2192,7 +2192,7 @@ Long *id = 789; //  (default to null)
 
 // Create an instance of the API class
 var api = new MonitorProxyApi.SiteApi()
-var id = 789; // {Long} 
+var id = 56; // {Integer} 
 
 var callback = function(error, data, response) {
   if (error) {
@@ -2224,7 +2224,7 @@ namespace Example
 
             // Create an instance of the API class
             var apiInstance = new SiteApi();
-            var id = 789;  // Long |  (default to null)
+            var id = 56;  // Integer |  (default to null)
 
             try {
                 Site result = apiInstance.deleteSite(id);
@@ -2244,7 +2244,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 // Create an instance of the API class
 $api_instance = new OpenAPITools\Client\Api\SiteApi();
-$id = 789; // Long | 
+$id = 56; // Integer | 
 
 try {
     $result = $api_instance->deleteSite($id);
@@ -2262,7 +2262,7 @@ use WWW::OPenAPIClient::SiteApi;
 
 # Create an instance of the API class
 my $api_instance = WWW::OPenAPIClient::SiteApi->new();
-my $id = 789; # Long | 
+my $id = 56; # Integer | 
 
 eval {
     my $result = $api_instance->deleteSite(id => $id);
@@ -2282,7 +2282,7 @@ from pprint import pprint
 
 # Create an instance of the API class
 api_instance = openapi_client.SiteApi()
-id = 789 # Long |  (default to null)
+id = 56 # Integer |  (default to null)
 
 try:
     api_response = api_instance.delete_site(id)
@@ -2295,7 +2295,7 @@ except ApiException as e:
                               <pre class="prettyprint"><code class="language-rust">extern crate SiteApi;
 
 pub fn main() {
-    let id = 789; // Long
+    let id = 56; // Integer
 
     let mut context = SiteApi::Context::default();
     let result = client.deleteSite(id, &context).wait();
@@ -2327,10 +2327,10 @@ pub fn main() {
         <div class="json-schema-view">
             <div class="primitive">
                 <span class="type">
-                    Long
+                    Integer
                 </span>
                     <span class="format">
-                        (int64)
+                        (integer)
                     </span>
 
             </div>
@@ -2488,7 +2488,7 @@ pub fn main() {
                         <p class="marked">Gets a site</p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/sites/{id}/</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/sites/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -2512,7 +2512,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-Site-getSite-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: application/json" \
- "http://localhost:9090/api/v1/sites/{id}/"
+ "http://localhost:9090/api/v1/sites/{id}"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Site-getSite-0-java">
