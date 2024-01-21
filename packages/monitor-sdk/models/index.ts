@@ -1,6 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export * from './AnyValue';
+export * from './Check';
+export * from './CheckResponse';
+export * from './CheckResponseResult';
 export * from './ErrorResult';
 export * from './Site';
 export * from './SiteAddRequest';

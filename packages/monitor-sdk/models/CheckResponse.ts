@@ -13,64 +13,64 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { CheckResponseResult } from './CheckResponseResult';
+import {
+    CheckResponseResultFromJSON,
+    CheckResponseResultFromJSONTyped,
+    CheckResponseResultToJSON,
+} from './CheckResponseResult';
 import type { ErrorResult } from './ErrorResult';
 import {
     ErrorResultFromJSON,
     ErrorResultFromJSONTyped,
     ErrorResultToJSON,
 } from './ErrorResult';
-import type { SiteAddResponseResult } from './SiteAddResponseResult';
-import {
-    SiteAddResponseResultFromJSON,
-    SiteAddResponseResultFromJSONTyped,
-    SiteAddResponseResultToJSON,
-} from './SiteAddResponseResult';
 
 /**
  * 
  * @export
- * @interface SiteAddResponse
+ * @interface CheckResponse
  */
-export interface SiteAddResponse {
+export interface CheckResponse {
     /**
      * 
      * @type {ErrorResult}
-     * @memberof SiteAddResponse
+     * @memberof CheckResponse
      */
     error?: ErrorResult;
     /**
      * 
-     * @type {SiteAddResponseResult}
-     * @memberof SiteAddResponse
+     * @type {CheckResponseResult}
+     * @memberof CheckResponse
      */
-    result?: SiteAddResponseResult;
+    result?: CheckResponseResult;
 }
 
 /**
- * Check if a given object implements the SiteAddResponse interface.
+ * Check if a given object implements the CheckResponse interface.
  */
-export function instanceOfSiteAddResponse(value: object): boolean {
+export function instanceOfCheckResponse(value: object): boolean {
     let isInstance = true;
 
     return isInstance;
 }
 
-export function SiteAddResponseFromJSON(json: any): SiteAddResponse {
-    return SiteAddResponseFromJSONTyped(json, false);
+export function CheckResponseFromJSON(json: any): CheckResponse {
+    return CheckResponseFromJSONTyped(json, false);
 }
 
-export function SiteAddResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): SiteAddResponse {
+export function CheckResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CheckResponse {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
         'error': !exists(json, 'error') ? undefined : ErrorResultFromJSON(json['error']),
-        'result': !exists(json, 'result') ? undefined : SiteAddResponseResultFromJSON(json['result']),
+        'result': !exists(json, 'result') ? undefined : CheckResponseResultFromJSON(json['result']),
     };
 }
 
-export function SiteAddResponseToJSON(value?: SiteAddResponse | null): any {
+export function CheckResponseToJSON(value?: CheckResponse | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -80,7 +80,7 @@ export function SiteAddResponseToJSON(value?: SiteAddResponse | null): any {
     return {
         
         'error': ErrorResultToJSON(value.error),
-        'result': SiteAddResponseResultToJSON(value.result),
+        'result': CheckResponseResultToJSON(value.result),
     };
 }
 

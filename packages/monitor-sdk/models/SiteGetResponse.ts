@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Monitor Proxy API
- * basix API proxy for Monitor
+ * Basic API proxy for Monitor
  *
  * The version of the OpenAPI document: 0.1.0
  * 

@@ -862,6 +862,33 @@ ul.nav-tabs {
     "type" : "object"
   } ]
 };
+    defs["Check"] = {
+  "type" : "object",
+  "properties" : {
+    "up" : {
+      "type" : "boolean"
+    }
+  }
+};
+    defs["CheckResponse"] = {
+  "type" : "object",
+  "properties" : {
+    "error" : {
+      "$ref" : "#/components/schemas/ErrorResult"
+    },
+    "result" : {
+      "$ref" : "#/components/schemas/CheckResponse_result"
+    }
+  }
+};
+    defs["CheckResponse_result"] = {
+  "type" : "object",
+  "properties" : {
+    "check" : {
+      "$ref" : "#/components/schemas/Check"
+    }
+  }
+};
     defs["ErrorResult"] = {
   "required" : [ "error" ],
   "type" : "object",
@@ -959,6 +986,13 @@ ul.nav-tabs {
             -->
             <li class="nav-fixed nav-header active" data-group="_"><a href="#api-_">API Summary</a></li>
 
+                  <li class="nav-header" data-group="Check"><a href="#api-Check">API Methods - Check</a></li>
+                    <li data-group="Check" data-name="checkSite" class="">
+                      <a href="#api-Check-checkSite">checkSite</a>
+                    </li>
+                    <li data-group="Check" data-name="checkSites" class="">
+                      <a href="#api-Check-checkSites">checkSites</a>
+                    </li>
                   <li class="nav-header" data-group="Default"><a href="#api-Default">API Methods - Default</a></li>
                     <li data-group="Default" data-name="getDoc" class="">
                       <a href="#api-Default-getDoc">getDoc</a>
@@ -995,11 +1029,801 @@ ul.nav-tabs {
               <div class="app-desc">Version: 0.1.0</div>
             <hr>
             <div id="app-description" class="app-desc">
-                basix API proxy for Monitor
+                Basic API proxy for Monitor
             </div>
           </div>
         </div>
         <div id="sections">
+                <section id="api-Check">
+                  <h1>Check</h1>
+                    <div id="api-Check-checkSite">
+                      <article id="api-Check-checkSite-0" data-group="User" data-name="checkSite" data-version="0">
+                        <div class="pull-left">
+                          <h1>checkSite</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">Checks one specified site</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/check/{id}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Check-checkSite-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Check-checkSite-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Check-checkSite-0-dart">Dart</a></li>
+                          <li class=""><a href="#examples-Check-checkSite-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Check-checkSite-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Check-checkSite-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Check-checkSite-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Check-checkSite-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Check-checkSite-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Check-checkSite-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Check-checkSite-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Check-checkSite-0-python">Python</a></li>
+                          <li class=""><a href="#examples-Check-checkSite-0-rust">Rust</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Check-checkSite-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X GET \
+ -H "Accept: application/json" \
+ "http://localhost:9090/api/v1/check/{id}"
+</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Check-checkSite-0-java">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.*;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.model.*;
+import org.openapitools.client.api.CheckApi;
+
+import java.io.File;
+import java.util.*;
+
+public class CheckApiExample {
+    public static void main(String[] args) {
+
+        // Create an instance of the API class
+        CheckApi apiInstance = new CheckApi();
+        Integer id = 56; // Integer | 
+
+        try {
+            Site result = apiInstance.checkSite(id);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CheckApi#checkSite");
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Check-checkSite-0-dart">
+                            <pre class="prettyprint"><code class="language-dart">import 'package:openapi/api.dart';
+
+final api_instance = DefaultApi();
+
+final Integer id = new Integer(); // Integer | 
+
+try {
+    final result = await api_instance.checkSite(id);
+    print(result);
+} catch (e) {
+    print('Exception when calling DefaultApi->checkSite: $e\n');
+}
+
+</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Check-checkSite-0-android">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.api.CheckApi;
+
+public class CheckApiExample {
+    public static void main(String[] args) {
+        CheckApi apiInstance = new CheckApi();
+        Integer id = 56; // Integer | 
+
+        try {
+            Site result = apiInstance.checkSite(id);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CheckApi#checkSite");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Check-checkSite-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Check-checkSite-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">
+
+// Create an instance of the API class
+CheckApi *apiInstance = [[CheckApi alloc] init];
+Integer *id = 56; //  (default to null)
+
+[apiInstance checkSiteWith:id
+              completionHandler: ^(Site output, NSError* error) {
+    if (output) {
+        NSLog(@"%@", output);
+    }
+    if (error) {
+        NSLog(@"Error: %@", error);
+    }
+}];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Check-checkSite-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var MonitorProxyApi = require('monitor_proxy_api');
+
+// Create an instance of the API class
+var api = new MonitorProxyApi.CheckApi()
+var id = 56; // {Integer} 
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.checkSite(id, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Check-checkSite-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Check-checkSite-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using Org.OpenAPITools.Api;
+using Org.OpenAPITools.Client;
+using Org.OpenAPITools.Model;
+
+namespace Example
+{
+    public class checkSiteExample
+    {
+        public void main()
+        {
+
+            // Create an instance of the API class
+            var apiInstance = new CheckApi();
+            var id = 56;  // Integer |  (default to null)
+
+            try {
+                Site result = apiInstance.checkSite(id);
+                Debug.WriteLine(result);
+            } catch (Exception e) {
+                Debug.Print("Exception when calling CheckApi.checkSite: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Check-checkSite-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Create an instance of the API class
+$api_instance = new OpenAPITools\Client\Api\CheckApi();
+$id = 56; // Integer | 
+
+try {
+    $result = $api_instance->checkSite($id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling CheckApi->checkSite: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Check-checkSite-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::OPenAPIClient::Configuration;
+use WWW::OPenAPIClient::CheckApi;
+
+# Create an instance of the API class
+my $api_instance = WWW::OPenAPIClient::CheckApi->new();
+my $id = 56; # Integer | 
+
+eval {
+    my $result = $api_instance->checkSite(id => $id);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling CheckApi->checkSite: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Check-checkSite-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import openapi_client
+from openapi_client.rest import ApiException
+from pprint import pprint
+
+# Create an instance of the API class
+api_instance = openapi_client.CheckApi()
+id = 56 # Integer |  (default to null)
+
+try:
+    api_response = api_instance.check_site(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling CheckApi->checkSite: %s\n" % e)</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Check-checkSite-0-rust">
+                              <pre class="prettyprint"><code class="language-rust">extern crate CheckApi;
+
+pub fn main() {
+    let id = 56; // Integer
+
+    let mut context = CheckApi::Context::default();
+    let result = client.checkSite(id, &context).wait();
+
+    println!("{:?}", result);
+}
+</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Scopes</h2>
+                          <table>
+                            
+                          </table>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+<td>
+
+
+    <div id="d2e199_checkSite_id">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    Integer
+                </span>
+                    <span class="format">
+                        (integer)
+                    </span>
+
+            </div>
+                <div class="inner required">
+                    Required
+                </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3 id="examples-Check-checkSite-title-200"></h3>
+                            <p id="examples-Check-checkSite-description-200" class="marked"></p>
+                            <script>
+                              var responseCheck200_description = `check response`;
+                              var responseCheck200_description_break = responseCheck200_description.indexOf('\n');
+                              if (responseCheck200_description_break == -1) {
+                                $("#examples-Check-checkSite-title-200").text("Status: 200 - " + responseCheck200_description);
+                              } else {
+                                $("#examples-Check-checkSite-title-200").text("Status: 200 - " + responseCheck200_description.substring(0, responseCheck200_description_break));
+                                $("#examples-Check-checkSite-description-200").html(responseCheck200_description.substring(responseCheck200_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Check-checkSite-200" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-Check-checkSite-200-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Check-checkSite-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Check-checkSite-200-schema">
+                                  <div id="responses-Check-checkSite-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = ;
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                          Object.keys(schema.properties).forEach( (item) => {
+                                            if (schema.properties[item].$ref != null) {
+                                              schema.properties[item] = defsParser.$refs.get(schema.properties[item].$ref);
+                                            }
+                                          });
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-Check-checkSite-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Check-checkSite-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Check-checkSite-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                            <h3 id="examples-Check-checkSite-title-default"></h3>
+                            <p id="examples-Check-checkSite-description-default" class="marked"></p>
+                            <script>
+                              var responseCheckdefault_description = `unexpected error`;
+                              var responseCheckdefault_description_break = responseCheckdefault_description.indexOf('\n');
+                              if (responseCheckdefault_description_break == -1) {
+                                $("#examples-Check-checkSite-title-default").text("Status: default - " + responseCheckdefault_description);
+                              } else {
+                                $("#examples-Check-checkSite-title-default").text("Status: default - " + responseCheckdefault_description.substring(0, responseCheckdefault_description_break));
+                                $("#examples-Check-checkSite-description-default").html(responseCheckdefault_description.substring(responseCheckdefault_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Check-checkSite-default" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-Check-checkSite-default-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Check-checkSite-default-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Check-checkSite-default-schema">
+                                  <div id="responses-Check-checkSite-schema-default" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = ;
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                          Object.keys(schema.properties).forEach( (item) => {
+                                            if (schema.properties[item].$ref != null) {
+                                              schema.properties[item] = defsParser.$refs.get(schema.properties[item].$ref);
+                                            }
+                                          });
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-Check-checkSite-default-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Check-checkSite-schema-default');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Check-checkSite-default-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Check-checkSites">
+                      <article id="api-Check-checkSites-0" data-group="User" data-name="checkSites" data-version="0">
+                        <div class="pull-left">
+                          <h1>checkSites</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">checks all the sites</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/check/all</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Check-checkSites-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Check-checkSites-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Check-checkSites-0-dart">Dart</a></li>
+                          <li class=""><a href="#examples-Check-checkSites-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Check-checkSites-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Check-checkSites-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Check-checkSites-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Check-checkSites-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Check-checkSites-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Check-checkSites-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Check-checkSites-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Check-checkSites-0-python">Python</a></li>
+                          <li class=""><a href="#examples-Check-checkSites-0-rust">Rust</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Check-checkSites-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X GET \
+ -H "Accept: application/json" \
+ "http://localhost:9090/api/v1/check/all"
+</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Check-checkSites-0-java">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.*;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.model.*;
+import org.openapitools.client.api.CheckApi;
+
+import java.io.File;
+import java.util.*;
+
+public class CheckApiExample {
+    public static void main(String[] args) {
+
+        // Create an instance of the API class
+        CheckApi apiInstance = new CheckApi();
+
+        try {
+            SiteGetResponse result = apiInstance.checkSites();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CheckApi#checkSites");
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Check-checkSites-0-dart">
+                            <pre class="prettyprint"><code class="language-dart">import 'package:openapi/api.dart';
+
+final api_instance = DefaultApi();
+
+
+try {
+    final result = await api_instance.checkSites();
+    print(result);
+} catch (e) {
+    print('Exception when calling DefaultApi->checkSites: $e\n');
+}
+
+</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Check-checkSites-0-android">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.api.CheckApi;
+
+public class CheckApiExample {
+    public static void main(String[] args) {
+        CheckApi apiInstance = new CheckApi();
+
+        try {
+            SiteGetResponse result = apiInstance.checkSites();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CheckApi#checkSites");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Check-checkSites-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Check-checkSites-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">
+
+// Create an instance of the API class
+CheckApi *apiInstance = [[CheckApi alloc] init];
+
+[apiInstance checkSitesWithCompletionHandler: 
+              ^(SiteGetResponse output, NSError* error) {
+    if (output) {
+        NSLog(@"%@", output);
+    }
+    if (error) {
+        NSLog(@"Error: %@", error);
+    }
+}];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Check-checkSites-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var MonitorProxyApi = require('monitor_proxy_api');
+
+// Create an instance of the API class
+var api = new MonitorProxyApi.CheckApi()
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.checkSites(callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Check-checkSites-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Check-checkSites-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using Org.OpenAPITools.Api;
+using Org.OpenAPITools.Client;
+using Org.OpenAPITools.Model;
+
+namespace Example
+{
+    public class checkSitesExample
+    {
+        public void main()
+        {
+
+            // Create an instance of the API class
+            var apiInstance = new CheckApi();
+
+            try {
+                SiteGetResponse result = apiInstance.checkSites();
+                Debug.WriteLine(result);
+            } catch (Exception e) {
+                Debug.Print("Exception when calling CheckApi.checkSites: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Check-checkSites-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Create an instance of the API class
+$api_instance = new OpenAPITools\Client\Api\CheckApi();
+
+try {
+    $result = $api_instance->checkSites();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling CheckApi->checkSites: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Check-checkSites-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::OPenAPIClient::Configuration;
+use WWW::OPenAPIClient::CheckApi;
+
+# Create an instance of the API class
+my $api_instance = WWW::OPenAPIClient::CheckApi->new();
+
+eval {
+    my $result = $api_instance->checkSites();
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling CheckApi->checkSites: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Check-checkSites-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import openapi_client
+from openapi_client.rest import ApiException
+from pprint import pprint
+
+# Create an instance of the API class
+api_instance = openapi_client.CheckApi()
+
+try:
+    api_response = api_instance.check_sites()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling CheckApi->checkSites: %s\n" % e)</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Check-checkSites-0-rust">
+                              <pre class="prettyprint"><code class="language-rust">extern crate CheckApi;
+
+pub fn main() {
+
+    let mut context = CheckApi::Context::default();
+    let result = client.checkSites(&context).wait();
+
+    println!("{:?}", result);
+}
+</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Scopes</h2>
+                          <table>
+                            
+                          </table>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3 id="examples-Check-checkSites-title-200"></h3>
+                            <p id="examples-Check-checkSites-description-200" class="marked"></p>
+                            <script>
+                              var responseCheck200_description = `check response`;
+                              var responseCheck200_description_break = responseCheck200_description.indexOf('\n');
+                              if (responseCheck200_description_break == -1) {
+                                $("#examples-Check-checkSites-title-200").text("Status: 200 - " + responseCheck200_description);
+                              } else {
+                                $("#examples-Check-checkSites-title-200").text("Status: 200 - " + responseCheck200_description.substring(0, responseCheck200_description_break));
+                                $("#examples-Check-checkSites-description-200").html(responseCheck200_description.substring(responseCheck200_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Check-checkSites-200" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-Check-checkSites-200-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Check-checkSites-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Check-checkSites-200-schema">
+                                  <div id="responses-Check-checkSites-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = ;
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                          Object.keys(schema.properties).forEach( (item) => {
+                                            if (schema.properties[item].$ref != null) {
+                                              schema.properties[item] = defsParser.$refs.get(schema.properties[item].$ref);
+                                            }
+                                          });
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-Check-checkSites-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Check-checkSites-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Check-checkSites-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                            <h3 id="examples-Check-checkSites-title-default"></h3>
+                            <p id="examples-Check-checkSites-description-default" class="marked"></p>
+                            <script>
+                              var responseCheckdefault_description = `unexpected error`;
+                              var responseCheckdefault_description_break = responseCheckdefault_description.indexOf('\n');
+                              if (responseCheckdefault_description_break == -1) {
+                                $("#examples-Check-checkSites-title-default").text("Status: default - " + responseCheckdefault_description);
+                              } else {
+                                $("#examples-Check-checkSites-title-default").text("Status: default - " + responseCheckdefault_description.substring(0, responseCheckdefault_description_break));
+                                $("#examples-Check-checkSites-description-default").html(responseCheckdefault_description.substring(responseCheckdefault_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Check-checkSites-default" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-Check-checkSites-default-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Check-checkSites-default-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Check-checkSites-default-schema">
+                                  <div id="responses-Check-checkSites-schema-default" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = ;
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                          Object.keys(schema.properties).forEach( (item) => {
+                                            if (schema.properties[item].$ref != null) {
+                                              schema.properties[item] = defsParser.$refs.get(schema.properties[item].$ref);
+                                            }
+                                          });
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-Check-checkSites-default-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Check-checkSites-schema-default');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Check-checkSites-default-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                        </article>
+                      </div>
+                      <hr>
+                  </section>
                 <section id="api-Default">
                   <h1>Default</h1>
                     <div id="api-Default-getDoc">
@@ -1639,7 +2463,7 @@ pub fn main() {
                         <p class="marked">adds a site to be monitored</p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/v1/site</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/v1/site/add</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -1664,7 +2488,7 @@ pub fn main() {
                             <pre class="prettyprint"><code class="language-bsh">curl -X POST \
  -H "Accept: application/json" \
  -H "Content-Type: application/json" \
- "http://localhost:9090/api/v1/site" \
+ "http://localhost:9090/api/v1/site/add" \
  -d '{
   &quot;name&quot; : &quot;name&quot;,
   &quot;url&quot; : &quot;url&quot;
@@ -2074,7 +2898,7 @@ $(document).ready(function() {
                         <p class="marked">deletes a site</p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/v1/site/{id}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/v1/site/delete/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -2098,7 +2922,7 @@ $(document).ready(function() {
                           <div class="tab-pane active" id="examples-Site-deleteSite-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X DELETE \
  -H "Accept: application/json" \
- "http://localhost:9090/api/v1/site/{id}"
+ "http://localhost:9090/api/v1/site/delete/{id}"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Site-deleteSite-0-java">
@@ -2488,7 +3312,7 @@ pub fn main() {
                         <p class="marked">Gets a site</p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/sites/{id}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/site/get/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -2512,7 +3336,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-Site-getSite-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: application/json" \
- "http://localhost:9090/api/v1/sites/{id}"
+ "http://localhost:9090/api/v1/site/get/{id}"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Site-getSite-0-java">
@@ -2902,7 +3726,7 @@ pub fn main() {
                         <p class="marked">Gets a list sites</p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/sites</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/site/list</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -2926,7 +3750,7 @@ pub fn main() {
                           <div class="tab-pane active" id="examples-Site-getSites-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: application/json" \
- "http://localhost:9090/api/v1/sites"
+ "http://localhost:9090/api/v1/site/list"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Site-getSites-0-java">
