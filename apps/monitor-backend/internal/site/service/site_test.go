@@ -226,7 +226,7 @@ func TestSiteService_List(t *testing.T) {
 				rows.AddRow(site.Id, site.Url, site.Name)
 			}
 
-			mockSQL.ExpectQuery("SELECT id, Url FROM sites").
+			mockSQL.ExpectQuery("SELECT id, Url, Name FROM sites").
 				WillReturnRows(rows)
 
 			got, err := s.List(ctx)
