@@ -11,6 +11,7 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/spf13/viper v1.18.2
 	github.com/stretchr/testify v1.8.4
+	golang.org/x/sync v0.5.0
 )
 
 require (

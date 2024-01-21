@@ -7,6 +7,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/kirre02/monitor-backend/internal/site/service"
+	"github.com/kirre02/monitor-backend/util"
 )
 
 type SiteHandler struct {
@@ -28,9 +29,7 @@ func (sh *SiteHandler) AddSite(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(addSite)
+	util.ToJson(w, addSite, http.StatusCreated)
 }
 
 func (sh *SiteHandler) GetSite(w http.ResponseWriter, r *http.Request) {
@@ -45,9 +44,7 @@ func (sh *SiteHandler) GetSite(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "failed to retrieve site", http.StatusInternalServerError)
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(getSite)
+	util.ToJson(w, getSite, http.StatusOK)
 }
 
 func (sh *SiteHandler) DeleteSite(w http.ResponseWriter, r *http.Request) {
@@ -62,9 +59,8 @@ func (sh *SiteHandler) DeleteSite(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "failed to retrieve site", http.StatusInternalServerError)
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(map[string]string{"message": "Site was successfully deleted"})
+	resp := map[string]string{"message": "Site was successfully deleted"}
+	util.ToJson(w, resp, http.StatusOK)
 }
 
 func (sh *SiteHandler) ListSites(w http.ResponseWriter, r *http.Request) {
@@ -74,18 +70,16 @@ func (sh *SiteHandler) ListSites(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(sites)
+	util.ToJson(w, sites, http.StatusOK)
 }
 
 func (sh *SiteHandler) Routes() chi.Router {
 	r := chi.NewRouter()
 
-	r.Get("/sites/{id}", sh.GetSite)
-	r.Get("/sites", sh.ListSites)
-	r.Post("/site", sh.AddSite)
-	r.Delete("/site/{id}", sh.DeleteSite)
+	r.Get("/get/{id}", sh.GetSite)
+	r.Get("/list", sh.ListSites)
+	r.Post("/add", sh.AddSite)
+	r.Delete("/del/{id}", sh.DeleteSite)
 
 	return r
 }

@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Monitor Proxy API
- * basix API proxy for Monitor
+ * Basic API proxy for Monitor
  *
  * The version of the OpenAPI document: 0.1.0
  * 
@@ -66,7 +66,7 @@ export class SiteApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/v1/site`,
+            path: `/api/v1/site/add`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -97,7 +97,7 @@ export class SiteApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/v1/site/{id}/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/site/delete/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -127,7 +127,7 @@ export class SiteApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/v1/sites/{id}/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/api/v1/site/get/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -153,7 +153,7 @@ export class SiteApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/v1/sites`,
+            path: `/api/v1/site/list`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

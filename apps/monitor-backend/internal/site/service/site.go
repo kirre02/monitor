@@ -90,7 +90,7 @@ type ListResponse struct {
 func (s *Service) List(ctx context.Context) (*ListResponse, error) {
 	var sites []*Site
 
-	err := s.DB.SelectContext(ctx, &sites, "SELECT id, Url FROM sites")
+	err := s.DB.SelectContext(ctx, &sites, "SELECT id, Url, Name FROM sites")
 	if err != nil {
 		return nil, err
 	}

@@ -1,8 +1,12 @@
+apis/CheckApi.ts
 apis/DefaultApi.ts
 apis/SiteApi.ts
 apis/index.ts
 index.ts
 models/AnyValue.ts
+models/Check.ts
+models/CheckResponse.ts
+models/CheckResponseResult.ts
 models/ErrorResult.ts
 models/Site.ts
 models/SiteAddRequest.ts
