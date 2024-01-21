@@ -11,6 +11,7 @@ import (
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/jmoiron/sqlx"
+	"github.com/kirre02/monitor-backend/internal/check"
 	"github.com/kirre02/monitor-backend/internal/site/handler"
 	"github.com/kirre02/monitor-backend/internal/site/service"
 	"github.com/kirre02/monitor-backend/util"
@@ -37,9 +38,15 @@ func main() {
 		Service: siteSvc,
 	}
 
+	checkSvc := check.NewCheckService(db)
+	checkHandler := &check.CheckHandler{
+		Svc: checkSvc,
+	}
+
 	router := chi.NewRouter()
 
-	router.Mount("/api/v1", siteHandler.Routes())
+	router.Mount("/api/v1/site", siteHandler.Routes())
+	router.Mount("/api/v1/check", checkHandler.Routes())
 
 	address := "0.0.0.0:9090"
 

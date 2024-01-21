@@ -9,42 +9,54 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-type SiteService struct {
-	Site service.SiteServiceInterface
+type Service struct {
+	DB *sqlx.DB
 }
 
-func check(ctx context.Context, site *service.Site, db *sqlx.DB) error {
+// Function to initialize the Service with a valid DB connection
+func NewCheckService(db *sqlx.DB) *Service {
+	return &Service{DB: db}
+}
+
+func (s *Service) check(ctx context.Context, site *service.Site) (*PingResponse, error) {
 	// Perform a ping check on the site
 	result, err := Ping(ctx, site.Url)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	// Insert the result into the database
-	_, err = db.ExecContext(ctx, `
-		INSERT INTO checks (site_id, up, checked_at)
-		VALUES ($1, $2, NOW())
-	`, site.Id, result.Up)
+	_, err = s.DB.ExecContext(ctx, `
+        INSERT INTO checks (site_id, up, checked_at)
+        VALUES ($1, $2, NOW())
+    `, site.Id, result.Up)
 
-	log.Info("Checking site ID", site.Id)
-	return err
+	log.Infof("Checking site ID: %d", site.Id)
+
+	return result, err
 }
 
 // Check checks a single site.
-func Check(ctx context.Context, siteID int, svc *SiteService, db *sqlx.DB) error {
-	site, err := svc.Site.Get(ctx, siteID)
-	if err != nil {
-		log.Error("Error checking for site ID", siteID, ":", err)
-		return err
-	}
-	log.Info("Checking site ID", site.Id)
+func (s *Service) Check(ctx context.Context, siteID int) (*PingResponse, error) {
+	// Initialize Site Service
+	siteSvc := service.NewSiteService(s.DB)
 
-	return check(ctx, site, db)
+	// Retrieve the site that the user wants to check on
+	site, err := siteSvc.Get(ctx, siteID)
+	if err != nil {
+		log.Error("Error checking site ID", siteID, ":", err)
+		return nil, err
+	}
+	log.Infof("Checking site ID: %d", site.Id)
+
+	return s.check(ctx, site)
 }
 
-func CheckAll(ctx context.Context, svc *SiteService, db *sqlx.DB) error {
+func (s *Service) CheckAll(ctx context.Context) error {
+	//initialize Site Service
+	siteSvc := service.NewSiteService(s.DB)
 	// Get all the tracked sites
-	resp, err := svc.Site.List(ctx)
+	resp, err := siteSvc.List(ctx)
 	if err != nil {
 		log.Error("Error getting site list:", err)
 		return err
@@ -56,8 +68,9 @@ func CheckAll(ctx context.Context, svc *SiteService, db *sqlx.DB) error {
 	for _, site := range resp.Sites {
 		site := site
 		g.Go(func() error {
-			log.Error("Error checking sites:", err)
-			return check(ctx, site, db)
+			log.Infof("Checking URL: %s", site.Url)
+			_, checkErr := s.check(ctx, site)
+			return checkErr
 		})
 	}
 	return g.Wait()
