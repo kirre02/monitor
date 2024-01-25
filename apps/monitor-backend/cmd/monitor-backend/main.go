@@ -63,6 +63,9 @@ func main() {
 
 	log.Infof("Starting server at: %s", address)
 	log.Fatal(srv.ListenAndServe())
+
+	// Whenever the main function exits, stop the checkservice
+	checkSvc.StopCron()
 }
 
 func runMigrations(databaseURL, migrationPath string) error {

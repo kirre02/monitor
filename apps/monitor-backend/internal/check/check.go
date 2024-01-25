@@ -2,20 +2,41 @@ package check
 
 import (
 	"context"
+	"time"
 
 	"github.com/charmbracelet/log"
 	"github.com/jmoiron/sqlx"
 	"github.com/kirre02/monitor-backend/internal/site/service"
+	"github.com/robfig/cron"
 	"golang.org/x/sync/errgroup"
 )
 
 type Service struct {
 	DB *sqlx.DB
+
+	Cron *cron.Cron
 }
 
 // Function to initialize the Service with a valid DB connection
 func NewCheckService(db *sqlx.DB) *Service {
-	return &Service{DB: db}
+	checkService := &Service{DB: db, Cron: cron.New()}
+
+	checkService.Cron.AddFunc("0 */30 * * *", func() {
+		err := checkService.CheckAll(context.Background())
+		if err != nil {
+			log.Errorf("difficulty running CheckAll, %s", err)
+		}
+	})
+
+	checkService.Cron.Start()
+
+	return checkService
+}
+
+func (s *Service) StopCron() {
+	if s.Cron != nil {
+		s.Cron.Stop()
+	}
 }
 
 func (s *Service) check(ctx context.Context, site *service.Site) (*PingResponse, error) {
@@ -53,7 +74,8 @@ func (s *Service) Check(ctx context.Context, siteID int) (*PingResponse, error) 
 }
 
 func (s *Service) CheckAll(ctx context.Context) error {
-	//initialize Site Service
+    log.Infof("Running CheckAll at: %s", time.Now().Format(time.RFC3339))
+    // initialize Site Service
 	siteSvc := service.NewSiteService(s.DB)
 	// Get all the tracked sites
 	resp, err := siteSvc.List(ctx)
