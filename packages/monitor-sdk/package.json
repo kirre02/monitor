@@ -1,0 +1,6 @@
+{
+    "name": "monitor-sdk",
+    "private": true,
+    "main": "apis/index.ts",
+    "workspaces": []
+  }
