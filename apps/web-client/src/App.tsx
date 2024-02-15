@@ -10,7 +10,7 @@ function App() {
         </h2>
 
           <main className='pt-8 pb-16'>
-            <SiteList/>
+            <SiteList />
         </main>
       </div>
     </>

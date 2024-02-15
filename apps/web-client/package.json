@@ -1,7 +1,7 @@
 {
   "name": "web-client",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.1.1",
     "luxon": "^3.4.4",
     "monitor-sdk": "workspace:^",
     "react": "^18.2.0",

@@ -1,79 +1,66 @@
-import { SiteApi, AddSiteRequest } from "monitor-sdk";
-import { ChangeEvent, useState } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
+import { Dialog } from "@headlessui/react";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
 
-function AddForm() {
-    const [formOpen, setFormOpen] = useState(false)
-    const [formValues, setFormValues] = useState({
-        url: '',
-        siteName: ''
-    })
+function MyForm() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    url: "",
+  });
 
-    const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = event.target
-        setFormValues({
-            ...formValues,
-            [name]: value
-        })
-    }
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-    const handleSiteSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        try {
-            const api = new SiteApi();
-            const requestData: AddSiteRequest = {
-                siteAddRequest: formValues
-            }
-            await api.addSite(requestData);
-            console.log('Site added successfully!');
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(formData);
+    setIsOpen(false); 
+  };
 
-            setFormValues({
-                url: '',
-                siteName: ''
-            });
-            setFormOpen(false);
-        } catch (error) {
-            console.error('Error adding site:', error);
-        }
-    };
-
-
-    if(!formOpen) {
-        return (
-            <button 
-                type="button"
-                className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-                onClick={() => setFormOpen(true)}
-                >
-                    Add site
-            </button>
-        )
-    }
-
-    return (
-        <form onSubmit={handleSiteSubmit}>
-  <div className="flex flex-col md:flex-row md:items-end gap-4">
-        <div>
-          <input
-            type="text"
-            value={formValues.url}
-            onChange={handleInput}
-            placeholder="google.com"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-          />
-        </div>
-
-        <div>
-          <button
-            type="submit"
-            className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm enabled:hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-75"
-          >
-            Save
-          </button>
-          <button type="button" onClick={() => setFormOpen(false)}>Cancel</button>
-        </div>
-      </div>
-        </form>
-    )
+  return (
+    <div>
+      <button
+        className="text-blue-600 hover:text-blue-900"
+        onClick={() => setIsOpen(true)}
+      >
+        <PlusCircleIcon className="h-5 w-5" />
+      </button>
+      <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+        <Dialog.Title>Dialog Title</Dialog.Title>
+        <Dialog.Description>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="email">Email</label>
+              <input
+                type="text"
+                id="id"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="password">Password</label>
+              <input
+                type="url"
+                id="url"
+                name="url"
+                value={formData.url}
+                onChange={handleChange}
+              />
+            </div>
+            <button type="submit">Submit</button>
+          </form>
+        </Dialog.Description>
+      </Dialog>
+    </div>
+  );
 }
 
-export default AddForm
+export default MyForm;
