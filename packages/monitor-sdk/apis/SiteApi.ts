@@ -19,7 +19,7 @@ import type {
   Site,
   SiteAddRequest,
   SiteAddResponse,
-  SiteGetResponse,
+  SiteListResponse,
 } from '../models/index';
 import {
     ErrorResultFromJSON,
@@ -30,8 +30,8 @@ import {
     SiteAddRequestToJSON,
     SiteAddResponseFromJSON,
     SiteAddResponseToJSON,
-    SiteGetResponseFromJSON,
-    SiteGetResponseToJSON,
+    SiteListResponseFromJSON,
+    SiteListResponseToJSON,
 } from '../models/index';
 
 export interface AddSiteRequest {
@@ -147,7 +147,7 @@ export class SiteApi extends runtime.BaseAPI {
     /**
      * Gets a list sites
      */
-    async getSitesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SiteGetResponse>> {
+    async getSitesRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SiteListResponse>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -159,13 +159,13 @@ export class SiteApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => SiteGetResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => SiteListResponseFromJSON(jsonValue));
     }
 
     /**
      * Gets a list sites
      */
-    async getSites(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SiteGetResponse> {
+    async getSites(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SiteListResponse> {
         const response = await this.getSitesRaw(initOverrides);
         return await response.value();
     }

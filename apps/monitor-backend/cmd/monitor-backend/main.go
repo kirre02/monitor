@@ -45,8 +45,8 @@ func main() {
 
 	router := chi.NewRouter()
 
-	router.Mount("/api/v1/site", siteHandler.Routes())
-	router.Mount("/api/v1/check", checkHandler.Routes())
+	router.Mount("/v1/site", siteHandler.Routes())
+	router.Mount("/v1/check", checkHandler.Routes())
 
 	address := "0.0.0.0:9090"
 

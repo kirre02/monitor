@@ -6,7 +6,7 @@ info:
   description: Basic API proxy for Monitor
 
 servers:
-  - url: http://localhost:9090
+  - url: http://localhost:4000
   
 tags:
   - name: site
@@ -72,7 +72,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SiteGetResponse'
+                $ref: '#/components/schemas/SiteListResponse'
         default:
           description: unexpected error
           content:
@@ -236,6 +236,16 @@ components:
           properties:
             site:
               $ref: '#/components/schemas/Site'
+
+    SiteListResponse:
+      type: object
+      required:
+        - Site
+      properties:
+        sites:
+          type: array
+          items:
+            $ref: '#/components/schemas/Site'
 
     SiteAddRequest:
       type: object

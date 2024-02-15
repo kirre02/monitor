@@ -14,5 +14,6 @@ models/SiteAddResponse.ts
 models/SiteAddResponseResult.ts
 models/SiteGetResponse.ts
 models/SiteGetResponseResult.ts
+models/SiteListResponse.ts
 models/index.ts
 runtime.ts
