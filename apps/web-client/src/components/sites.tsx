@@ -1,3 +1,4 @@
+import AddForm from "./AddForm";
 import StatusBadge from "./badge";
 import DeleteButton from "./deleteButton";
 
@@ -25,6 +26,9 @@ const doDelete = () => {
 function SiteList() {
   return (
     <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+      <div className="flex justify-between items-center px-4 py-2 bg-gray-50">
+        <AddForm />
+      </div>
       <table className="min-w-full divide-y divide-gray-300">
         <thead className="bg-gray-50">
           <tr>
@@ -54,7 +58,7 @@ function SiteList() {
                 </div>
               </td>
               <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                <DeleteButton onClick={doDelete}/>
+                <DeleteButton onClick={doDelete} />
               </td>
             </tr>
           </tbody>

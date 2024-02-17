@@ -11,7 +11,8 @@ services:
     networks:
       - monitor-network
     depends_on:
-      - mondb
+      mondb:
+        condition: service_healthy
   proxy:
     container_name: monitor_proxy
     image: 'nginx:1.25'
@@ -20,12 +21,16 @@ services:
       - ./apps/proxy/docs:/usr/share/nginx/html
     ports:
       - "4000:80"
+    depends_on:
+      - api
     networks:
       - monitor-network
   mondb:
     container_name: mondb
     image: 'postgres:15.2-alpine'
     restart: unless-stopped
+    healthcheck:
+      test: "exit 0"
     ports:
       - 5432:5432
     env_file:
