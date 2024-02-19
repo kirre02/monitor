@@ -14,6 +14,7 @@ import (
 	"github.com/kirre02/monitor-backend/internal/check"
 	"github.com/kirre02/monitor-backend/internal/site/handler"
 	"github.com/kirre02/monitor-backend/internal/site/service"
+	"github.com/kirre02/monitor-backend/internal/status"
 	"github.com/kirre02/monitor-backend/util"
 
 	"github.com/charmbracelet/log"
@@ -35,7 +36,7 @@ func main() {
 
 	siteSvc := service.NewSiteService(db)
 	siteHandler := &handler.SiteHandler{
-		Service: siteSvc,
+		Svc: siteSvc,
 	}
 
 	checkSvc := check.NewCheckService(db)
@@ -43,10 +44,16 @@ func main() {
 		Svc: checkSvc,
 	}
 
+	statusSvc := status.NewStatusService(db)
+	statusHander := &status.StatusHandler{
+		Svc: *statusSvc,
+	}
+
 	router := chi.NewRouter()
 
 	router.Mount("/v1/site", siteHandler.Routes())
 	router.Mount("/v1/check", checkHandler.Routes())
+	router.Mount("/v1/status", statusHander.Routes())
 
 	address := "0.0.0.0:9090"
 

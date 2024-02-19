@@ -11,7 +11,7 @@ import (
 )
 
 type SiteHandler struct {
-	Service service.SiteServiceInterface
+	Svc service.SiteServiceInterface
 }
 
 func (sh *SiteHandler) AddSite(w http.ResponseWriter, r *http.Request) {
@@ -23,7 +23,7 @@ func (sh *SiteHandler) AddSite(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	addSite, err := sh.Service.Add(r.Context(), &params)
+	addSite, err := sh.Svc.Add(r.Context(), &params)
 	if err != nil {
 		http.Error(w, "Failed to add site", http.StatusBadRequest)
 		return
@@ -39,7 +39,7 @@ func (sh *SiteHandler) GetSite(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid Site ID", http.StatusBadRequest)
 	}
 
-	getSite, err := sh.Service.Get(r.Context(), siteID)
+	getSite, err := sh.Svc.Get(r.Context(), siteID)
 	if err != nil {
 		http.Error(w, "failed to retrieve site", http.StatusInternalServerError)
 	}
@@ -54,7 +54,7 @@ func (sh *SiteHandler) DeleteSite(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "invalid Site ID", http.StatusBadRequest)
 	}
 
-	err = sh.Service.Delete(r.Context(), siteID)
+	err = sh.Svc.Delete(r.Context(), siteID)
 	if err != nil {
 		http.Error(w, "failed to retrieve site", http.StatusInternalServerError)
 	}
@@ -64,7 +64,7 @@ func (sh *SiteHandler) DeleteSite(w http.ResponseWriter, r *http.Request) {
 }
 
 func (sh *SiteHandler) ListSites(w http.ResponseWriter, r *http.Request) {
-	sites, err := sh.Service.List(r.Context())
+	sites, err := sh.Svc.List(r.Context())
 	if err != nil {
 		http.Error(w, "Failed to retrieve sites", http.StatusInternalServerError)
 		return

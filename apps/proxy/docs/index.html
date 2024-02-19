@@ -909,10 +909,10 @@ ul.nav-tabs {
     "id" : {
       "type" : "integer"
     },
-    "url" : {
+    "Url" : {
       "type" : "string"
     },
-    "name" : {
+    "Name" : {
       "type" : "string"
     }
   }
@@ -969,13 +969,39 @@ ul.nav-tabs {
   }
 };
     defs["SiteListResponse"] = {
-  "required" : [ "Site" ],
+  "required" : [ "sites" ],
   "type" : "object",
   "properties" : {
     "sites" : {
       "type" : "array",
       "items" : {
         "$ref" : "#/components/schemas/Site"
+      }
+    }
+  }
+};
+    defs["Status"] = {
+  "required" : [ "checkedAt", "up" ],
+  "type" : "object",
+  "properties" : {
+    "up" : {
+      "type" : "boolean",
+      "description" : "Indicates whether the site is up or not."
+    },
+    "checkedAt" : {
+      "type" : "string",
+      "description" : "Time when the site was last checked."
+    }
+  }
+};
+    defs["StatusResponse"] = {
+  "required" : [ "sites" ],
+  "type" : "object",
+  "properties" : {
+    "sites" : {
+      "type" : "object",
+      "additionalProperties" : {
+        "$ref" : "#/components/schemas/Status"
       }
     }
   }
@@ -1024,6 +1050,10 @@ ul.nav-tabs {
                     </li>
                     <li data-group="Site" data-name="getSites" class="">
                       <a href="#api-Site-getSites">getSites</a>
+                    </li>
+                  <li class="nav-header" data-group="Status"><a href="#api-Status">API Methods - Status</a></li>
+                    <li data-group="Status" data-name="status" class="">
+                      <a href="#api-Status-status">status</a>
                     </li>
           </ul>
         </nav>
@@ -4094,6 +4124,382 @@ pub fn main() {
                                     </script>
                                   </div>
                                   <input id='responses-Site-getSites-default-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                        </article>
+                      </div>
+                      <hr>
+                  </section>
+                <section id="api-Status">
+                  <h1>Status</h1>
+                    <div id="api-Status-status">
+                      <article id="api-Status-status-0" data-group="User" data-name="status" data-version="0">
+                        <div class="pull-left">
+                          <h1>status</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked">returns the status of all sites</p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/v1/status</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Status-status-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Status-status-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Status-status-0-dart">Dart</a></li>
+                          <li class=""><a href="#examples-Status-status-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Status-status-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Status-status-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Status-status-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Status-status-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Status-status-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Status-status-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Status-status-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Status-status-0-python">Python</a></li>
+                          <li class=""><a href="#examples-Status-status-0-rust">Rust</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Status-status-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X GET \
+ -H "Accept: application/json" \
+ "http://localhost:4000/api/v1/status"
+</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Status-status-0-java">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.*;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.model.*;
+import org.openapitools.client.api.StatusApi;
+
+import java.io.File;
+import java.util.*;
+
+public class StatusApiExample {
+    public static void main(String[] args) {
+
+        // Create an instance of the API class
+        StatusApi apiInstance = new StatusApi();
+
+        try {
+            StatusResponse result = apiInstance.status();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling StatusApi#status");
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Status-status-0-dart">
+                            <pre class="prettyprint"><code class="language-dart">import 'package:openapi/api.dart';
+
+final api_instance = DefaultApi();
+
+
+try {
+    final result = await api_instance.status();
+    print(result);
+} catch (e) {
+    print('Exception when calling DefaultApi->status: $e\n');
+}
+
+</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Status-status-0-android">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.api.StatusApi;
+
+public class StatusApiExample {
+    public static void main(String[] args) {
+        StatusApi apiInstance = new StatusApi();
+
+        try {
+            StatusResponse result = apiInstance.status();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling StatusApi#status");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Status-status-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Status-status-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">
+
+// Create an instance of the API class
+StatusApi *apiInstance = [[StatusApi alloc] init];
+
+[apiInstance statusWithCompletionHandler: 
+              ^(StatusResponse output, NSError* error) {
+    if (output) {
+        NSLog(@"%@", output);
+    }
+    if (error) {
+        NSLog(@"Error: %@", error);
+    }
+}];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Status-status-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var MonitorProxyApi = require('monitor_proxy_api');
+
+// Create an instance of the API class
+var api = new MonitorProxyApi.StatusApi()
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.status(callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Status-status-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Status-status-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using Org.OpenAPITools.Api;
+using Org.OpenAPITools.Client;
+using Org.OpenAPITools.Model;
+
+namespace Example
+{
+    public class statusExample
+    {
+        public void main()
+        {
+
+            // Create an instance of the API class
+            var apiInstance = new StatusApi();
+
+            try {
+                StatusResponse result = apiInstance.status();
+                Debug.WriteLine(result);
+            } catch (Exception e) {
+                Debug.Print("Exception when calling StatusApi.status: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Status-status-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Create an instance of the API class
+$api_instance = new OpenAPITools\Client\Api\StatusApi();
+
+try {
+    $result = $api_instance->status();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling StatusApi->status: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Status-status-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::OPenAPIClient::Configuration;
+use WWW::OPenAPIClient::StatusApi;
+
+# Create an instance of the API class
+my $api_instance = WWW::OPenAPIClient::StatusApi->new();
+
+eval {
+    my $result = $api_instance->status();
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling StatusApi->status: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Status-status-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import openapi_client
+from openapi_client.rest import ApiException
+from pprint import pprint
+
+# Create an instance of the API class
+api_instance = openapi_client.StatusApi()
+
+try:
+    api_response = api_instance.status()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling StatusApi->status: %s\n" % e)</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Status-status-0-rust">
+                              <pre class="prettyprint"><code class="language-rust">extern crate StatusApi;
+
+pub fn main() {
+
+    let mut context = StatusApi::Context::default();
+    let result = client.status(&context).wait();
+
+    println!("{:?}", result);
+}
+</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Scopes</h2>
+                          <table>
+                            
+                          </table>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3 id="examples-Status-status-title-200"></h3>
+                            <p id="examples-Status-status-description-200" class="marked"></p>
+                            <script>
+                              var responseStatus200_description = `status response`;
+                              var responseStatus200_description_break = responseStatus200_description.indexOf('\n');
+                              if (responseStatus200_description_break == -1) {
+                                $("#examples-Status-status-title-200").text("Status: 200 - " + responseStatus200_description);
+                              } else {
+                                $("#examples-Status-status-title-200").text("Status: 200 - " + responseStatus200_description.substring(0, responseStatus200_description_break));
+                                $("#examples-Status-status-description-200").html(responseStatus200_description.substring(responseStatus200_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Status-status-200" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-Status-status-200-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Status-status-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Status-status-200-schema">
+                                  <div id="responses-Status-status-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = ;
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                          Object.keys(schema.properties).forEach( (item) => {
+                                            if (schema.properties[item].$ref != null) {
+                                              schema.properties[item] = defsParser.$refs.get(schema.properties[item].$ref);
+                                            }
+                                          });
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-Status-status-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Status-status-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Status-status-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                            <h3 id="examples-Status-status-title-default"></h3>
+                            <p id="examples-Status-status-description-default" class="marked"></p>
+                            <script>
+                              var responseStatusdefault_description = `unexpected error`;
+                              var responseStatusdefault_description_break = responseStatusdefault_description.indexOf('\n');
+                              if (responseStatusdefault_description_break == -1) {
+                                $("#examples-Status-status-title-default").text("Status: default - " + responseStatusdefault_description);
+                              } else {
+                                $("#examples-Status-status-title-default").text("Status: default - " + responseStatusdefault_description.substring(0, responseStatusdefault_description_break));
+                                $("#examples-Status-status-description-default").html(responseStatusdefault_description.substring(responseStatusdefault_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Status-status-default" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-Status-status-default-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Status-status-default-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Status-status-default-schema">
+                                  <div id="responses-Status-status-schema-default" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = ;
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                          Object.keys(schema.properties).forEach( (item) => {
+                                            if (schema.properties[item].$ref != null) {
+                                              schema.properties[item] = defsParser.$refs.get(schema.properties[item].$ref);
+                                            }
+                                          });
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-Status-status-default-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Status-status-schema-default');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Status-status-default-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
                         </article>

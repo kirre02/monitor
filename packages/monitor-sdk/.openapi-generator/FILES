@@ -1,6 +1,7 @@
 apis/CheckApi.ts
 apis/DefaultApi.ts
 apis/SiteApi.ts
+apis/StatusApi.ts
 apis/index.ts
 index.ts
 models/AnyValue.ts
@@ -15,5 +16,7 @@ models/SiteAddResponseResult.ts
 models/SiteGetResponse.ts
 models/SiteGetResponseResult.ts
 models/SiteListResponse.ts
+models/Status.ts
+models/StatusResponse.ts
 models/index.ts
 runtime.ts

@@ -1,27 +1,18 @@
-import { Check } from "monitor-sdk/models";
+import { Status } from "monitor-sdk/models";
 
 interface StatusBadgeProps {
-  status: Check | undefined;
+  status: Status | undefined;
 }
 
 function StatusBadge({ status }: StatusBadgeProps) {
   const up = status?.up;
-  let badgeColor;
-  let badgeText;
-
-  if (up === true) {
-    badgeColor = "green";
-    badgeText = "Up";
-  } else if (up === false) {
-    badgeColor = "red";
-    badgeText = "Down";
-  } else {
-    badgeColor = "gray";
-    badgeText = "Unknown";
-  }
-
-  // @ts-ignore
-  return <Badge color={badgeColor}>{badgeText}</Badge>;
+  return up ? (
+    <Badge color="green">Up</Badge>
+  ) : up === false ? (
+    <Badge color="red">Down</Badge>
+  ) : (
+    <Badge color="gray">Unknown</Badge>
+  );
 }
 
 interface BadgeProps {

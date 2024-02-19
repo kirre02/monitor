@@ -114,7 +114,7 @@ func TestAddSiteHandler(t *testing.T) {
 				},
 			}
 
-			siteHandler := &handler.SiteHandler{Service: svc}
+			siteHandler := &handler.SiteHandler{Svc: svc}
 			router.Post("/api/v1/site", siteHandler.AddSite)
 
 			router.ServeHTTP(w, r)
@@ -209,7 +209,7 @@ func TestGetSiteHandler(t *testing.T) {
 				},
 			}
 
-			siteHandler := &handler.SiteHandler{Service: svc}
+			siteHandler := &handler.SiteHandler{Svc: svc}
 			router.Get("/api/v1/site/{id}", siteHandler.GetSite)
 
 			router.ServeHTTP(w, r)
@@ -277,7 +277,7 @@ func TestListSitesHandler(t *testing.T) {
 				},
 			}
 
-			siteHandler := &handler.SiteHandler{Service: svc}
+			siteHandler := &handler.SiteHandler{Svc: svc}
 			router.Get("/api/v1/sites", siteHandler.ListSites)
 
 			router.ServeHTTP(w, r)
@@ -338,7 +338,7 @@ func TestDeleteSiteHandler(t *testing.T) {
 				},
 			}
 
-			siteHandler := &handler.SiteHandler{Service: svc}
+			siteHandler := &handler.SiteHandler{Svc: svc}
 			router.Delete("/api/v1/site/{id}", siteHandler.DeleteSite)
 
 			router.ServeHTTP(w, r)

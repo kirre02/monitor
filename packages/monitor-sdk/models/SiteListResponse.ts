@@ -31,7 +31,7 @@ export interface SiteListResponse {
      * @type {Array<Site>}
      * @memberof SiteListResponse
      */
-    sites?: Array<Site>;
+    sites: Array<Site>;
 }
 
 /**
@@ -39,6 +39,7 @@ export interface SiteListResponse {
  */
 export function instanceOfSiteListResponse(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "sites" in value;
 
     return isInstance;
 }
@@ -53,7 +54,7 @@ export function SiteListResponseFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
-        'sites': !exists(json, 'sites') ? undefined : ((json['sites'] as Array<any>).map(SiteFromJSON)),
+        'sites': ((json['sites'] as Array<any>).map(SiteFromJSON)),
     };
 }
 
@@ -66,7 +67,7 @@ export function SiteListResponseToJSON(value?: SiteListResponse | null): any {
     }
     return {
         
-        'sites': value.sites === undefined ? undefined : ((value.sites as Array<any>).map(SiteToJSON)),
+        'sites': ((value.sites as Array<any>).map(SiteToJSON)),
     };
 }
 

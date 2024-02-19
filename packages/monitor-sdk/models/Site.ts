@@ -30,13 +30,13 @@ export interface Site {
      * @type {string}
      * @memberof Site
      */
-    url: string;
+    url?: string;
     /**
      * 
      * @type {string}
      * @memberof Site
      */
-    name: string;
+    name?: string;
 }
 
 /**
@@ -45,8 +45,6 @@ export interface Site {
 export function instanceOfSite(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "url" in value;
-    isInstance = isInstance && "name" in value;
 
     return isInstance;
 }
@@ -62,8 +60,8 @@ export function SiteFromJSONTyped(json: any, ignoreDiscriminator: boolean): Site
     return {
         
         'id': json['id'],
-        'url': json['url'],
-        'name': json['name'],
+        'url': !exists(json, 'Url') ? undefined : json['Url'],
+        'name': !exists(json, 'Name') ? undefined : json['Name'],
     };
 }
 
@@ -77,8 +75,8 @@ export function SiteToJSON(value?: Site | null): any {
     return {
         
         'id': value.id,
-        'url': value.url,
-        'name': value.name,
+        'Url': value.url,
+        'Name': value.name,
     };
 }
 

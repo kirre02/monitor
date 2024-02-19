@@ -7,12 +7,14 @@ info:
 
 servers:
   - url: http://localhost:4000
-  
+
 tags:
   - name: site
     description: handles sites that are added
   - name: check
     description: checks the sites added
+  - name: status
+    description: shows the current status of all sites
 
 paths:
   /proxy-api.yaml:
@@ -24,7 +26,7 @@ paths:
           content:
             application/file:
               schema:
-                $ref: '#/components/schemas/AnyValue'
+                $ref: "#/components/schemas/AnyValue"
   /doc:
     get:
       operationId: getDoc
@@ -34,10 +36,10 @@ paths:
           content:
             application/html:
               schema:
-                $ref: '#/components/schemas/AnyValue'
+                $ref: "#/components/schemas/AnyValue"
   /api/v1/site/add:
     post:
-      tags: 
+      tags:
         - site
       description: adds a site to be monitored
       operationId: addSite
@@ -46,20 +48,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SiteAddRequest'
+              $ref: "#/components/schemas/SiteAddRequest"
       responses:
-        '201':
+        "201":
           description: site response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SiteAddResponse'
+                $ref: "#/components/schemas/SiteAddResponse"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResult'
+                $ref: "#/components/schemas/ErrorResult"
   /api/v1/site/list:
     get:
       tags:
@@ -67,18 +69,18 @@ paths:
       description: Gets a list sites
       operationId: getSites
       responses:
-        '200':
+        "200":
           description: site response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SiteListResponse'
+                $ref: "#/components/schemas/SiteListResponse"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResult'
+                $ref: "#/components/schemas/ErrorResult"
 
   /api/v1/site/get/{id}:
     get:
@@ -89,25 +91,25 @@ paths:
       parameters:
         - name: id
           in: path
-          description: 
+          description:
           required: true
           schema:
             type: integer
             format: int64
       responses:
-        '200':
+        "200":
           description: Site response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Site'
+                $ref: "#/components/schemas/Site"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResult'
- 
+                $ref: "#/components/schemas/ErrorResult"
+
   /api/v1/site/delete/{id}:
     delete:
       tags:
@@ -117,27 +119,27 @@ paths:
       parameters:
         - name: id
           in: path
-          description: 
+          description:
           required: true
           schema:
             type: integer
             format: integer
       responses:
-        '200':
+        "200":
           description: Site response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Site'
+                $ref: "#/components/schemas/Site"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResult'
-  
+                $ref: "#/components/schemas/ErrorResult"
+
   /api/v1/check/{id}:
-    get: 
+    get:
       tags:
         - check
       description: Checks one specified site
@@ -145,25 +147,25 @@ paths:
       parameters:
         - name: id
           in: path
-          description: 
+          description:
           required: true
           schema:
             type: integer
             format: integer
       responses:
-        '200':
+        "200":
           description: check response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Site'
+                $ref: "#/components/schemas/Site"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResult'
-  
+                $ref: "#/components/schemas/ErrorResult"
+
   /api/v1/check/all:
     get:
       tags:
@@ -171,18 +173,39 @@ paths:
       description: checks all the sites
       operationId: checkSites
       responses:
-        '200':
+        "200":
           description: check response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SiteGetResponse'
+                $ref: "#/components/schemas/SiteGetResponse"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResult'
+                $ref: "#/components/schemas/ErrorResult"
+
+  /api/v1/status:
+    get:
+      tags:
+        - status
+      description: returns the status of all sites
+      operationId: Status
+      responses:
+        "200":
+          description: status response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResult"
+
 components:
   schemas:
     ErrorResult:
@@ -197,55 +220,68 @@ components:
           type: string
 
     AnyValue:
-        anyOf:
-          - type: string
-          - type: number
-          - type: integer
-          - type: boolean
-          - type: array
-            items: { }
-          - type: object
-  
+      anyOf:
+        - type: string
+        - type: number
+        - type: integer
+        - type: boolean
+        - type: array
+          items: {}
+        - type: object
+
     Site:
       type: object
       required:
-       - id
-       - url 
-       - name 
+        - id
+        - url
+        - name
       properties:
         id:
-         type: integer
-        url:
+          type: integer
+        Url:
           type: string
-        name:
+        Name:
           type: string
+
+    Status:
+      type: object
+      properties:
+        up:
+          type: boolean
+          description: Indicates whether the site is up or not.
+        checkedAt:
+          type: string
+          description: Time when the site was last checked.
+      required:
+        - up
+        - checkedAt
 
     Check:
       type: object
       properties:
         up:
-          type: boolean      
+          type: boolean
     # HTTP Models
     SiteGetResponse:
       type: object
       properties:
         error:
-          $ref: '#/components/schemas/ErrorResult'
+          $ref: "#/components/schemas/ErrorResult"
         result:
           type: object
           properties:
             site:
-              $ref: '#/components/schemas/Site'
+              $ref: "#/components/schemas/Site"
 
     SiteListResponse:
       type: object
-      required:
-        - Site
       properties:
         sites:
           type: array
           items:
-            $ref: '#/components/schemas/Site'
+            $ref: "#/components/schemas/Site"
+      required:
+        - sites
 
     SiteAddRequest:
       type: object
@@ -256,27 +292,37 @@ components:
           type: string
         name:
           type: string
-    
+
     SiteAddResponse:
       type: object
       properties:
         error:
-          $ref: '#/components/schemas/ErrorResult'
+          $ref: "#/components/schemas/ErrorResult"
         result:
           type: object
           required:
             - site
           properties:
             site:
-              $ref: '#/components/schemas/Site'
-    
+              $ref: "#/components/schemas/Site"
+
     CheckResponse:
       type: object
       properties:
         error:
-          $ref: '#/components/schemas/ErrorResult'
+          $ref: "#/components/schemas/ErrorResult"
         result:
           type: object
           properties:
             check:
-              $ref: '#/components/schemas/Check'
+              $ref: "#/components/schemas/Check"
+
+    StatusResponse:
+      type: object
+      properties:
+        sites:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Status'
+      required:
+        - sites

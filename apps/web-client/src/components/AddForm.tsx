@@ -1,30 +1,66 @@
-import { useState, FormEvent, ChangeEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { Dialog } from "@headlessui/react";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import isValidURL from "../lib/validate";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createAPIBridge } from "../lib/apiBridge";
+import { AddSiteRequest } from "monitor-sdk/apis/SiteApi";
 
 function AddForm() {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    url: "",
+    name: '',
+    url: ''
   });
+
+  const {siteApi} = createAPIBridge();
+  const queryClient = useQueryClient();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!isValidURL(formData.url)) {
+      return;
+    }
+
+    try {
+      await save.mutateAsync(formData);
+      setFormData({ name: "", url: "" });
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const save = useMutation({
+    mutationFn: async (formData: { name: string; url: string }) => {
+      if (!isValidURL(formData.url)) {
+        return;
+      }
+
+      const siteRequest: AddSiteRequest = {
+        siteAddRequest: {
+          name: formData.name,
+          url: formData.url,
+        }
+      };
+  
+      await siteApi.addSite(siteRequest);
+      setIsOpen(false);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["sites"] });
+      queryClient.invalidateQueries({ queryKey: ["status"] });
+    },
+  });
+
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: value
     }));
-  };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(formData);
-    setIsOpen(false);
-    setFormData({
-        name:'',
-        url:''
-    })
   };
 
   return (
@@ -66,6 +102,7 @@ function AddForm() {
               <button
                 type="submit"
                 className="inline-block px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-400"
+                disabled={!isValidURL(formData.url)}
               >
                 Submit
               </button>

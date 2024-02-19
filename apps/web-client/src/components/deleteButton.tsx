@@ -1,7 +1,5 @@
 import { TrashIcon } from "@heroicons/react/24/outline";
 
-
-
 interface DeleteButtonProps {
   onClick: () => void; // Define the type of onClick prop
 }

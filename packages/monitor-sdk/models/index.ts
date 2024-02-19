@@ -12,3 +12,5 @@ export * from './SiteAddResponseResult';
 export * from './SiteGetResponse';
 export * from './SiteGetResponseResult';
 export * from './SiteListResponse';
+export * from './Status';
+export * from './StatusResponse';
