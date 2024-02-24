@@ -1,6 +1,13 @@
 {
     "name": "monitor",
     "version": "0.1.0",
+    "scripts":{
+      "web:dev": "pnpm -F web-client dev",
+      "web:test":"pnpm -F web-client test",
+      "db:start":"docker compose up -d mondb",
+      "api:start": "docker compose up -d",
+      "down":"docker compose down"
+    },
     "contributors": [
       {
         "name": "Erik",

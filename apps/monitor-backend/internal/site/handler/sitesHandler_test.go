@@ -56,7 +56,7 @@ func TestAddSiteHandler(t *testing.T) {
 					Url:  "example.com",
 				},
 				err:    nil,
-				status: http.StatusCreated,
+				status: http.StatusOK,
 			},
 		},
 		{
@@ -74,7 +74,7 @@ func TestAddSiteHandler(t *testing.T) {
 					Url:  "example.com",
 				},
 				err:    nil,
-				status: http.StatusCreated,
+				status: http.StatusOK,
 			},
 		},
 		{
@@ -114,7 +114,7 @@ func TestAddSiteHandler(t *testing.T) {
 				},
 			}
 
-			siteHandler := &handler.SiteHandler{Service: svc}
+			siteHandler := &handler.SiteHandler{Svc: svc}
 			router.Post("/api/v1/site", siteHandler.AddSite)
 
 			router.ServeHTTP(w, r)
@@ -128,7 +128,7 @@ func TestAddSiteHandler(t *testing.T) {
 			// If the response status code is OK (200 or 201), decode the response body
 			if resp.StatusCode != test.want.status {
 				t.Errorf("Expected status code %d, got %d", test.want.status, resp.StatusCode)
-			} else if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusCreated {
+			} else if resp.StatusCode != http.StatusOK {
 				b, err := io.ReadAll(w.Body)
 				assert.Nil(t, err)
 
@@ -209,7 +209,7 @@ func TestGetSiteHandler(t *testing.T) {
 				},
 			}
 
-			siteHandler := &handler.SiteHandler{Service: svc}
+			siteHandler := &handler.SiteHandler{Svc: svc}
 			router.Get("/api/v1/site/{id}", siteHandler.GetSite)
 
 			router.ServeHTTP(w, r)
@@ -277,7 +277,7 @@ func TestListSitesHandler(t *testing.T) {
 				},
 			}
 
-			siteHandler := &handler.SiteHandler{Service: svc}
+			siteHandler := &handler.SiteHandler{Svc: svc}
 			router.Get("/api/v1/sites", siteHandler.ListSites)
 
 			router.ServeHTTP(w, r)
@@ -338,7 +338,7 @@ func TestDeleteSiteHandler(t *testing.T) {
 				},
 			}
 
-			siteHandler := &handler.SiteHandler{Service: svc}
+			siteHandler := &handler.SiteHandler{Svc: svc}
 			router.Delete("/api/v1/site/{id}", siteHandler.DeleteSite)
 
 			router.ServeHTTP(w, r)
