@@ -56,7 +56,7 @@ func TestAddSiteHandler(t *testing.T) {
 					Url:  "example.com",
 				},
 				err:    nil,
-				status: http.StatusCreated,
+				status: http.StatusOK,
 			},
 		},
 		{
@@ -74,7 +74,7 @@ func TestAddSiteHandler(t *testing.T) {
 					Url:  "example.com",
 				},
 				err:    nil,
-				status: http.StatusCreated,
+				status: http.StatusOK,
 			},
 		},
 		{
@@ -128,7 +128,7 @@ func TestAddSiteHandler(t *testing.T) {
 			// If the response status code is OK (200 or 201), decode the response body
 			if resp.StatusCode != test.want.status {
 				t.Errorf("Expected status code %d, got %d", test.want.status, resp.StatusCode)
-			} else if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusCreated {
+			} else if resp.StatusCode != http.StatusOK {
 				b, err := io.ReadAll(w.Body)
 				assert.Nil(t, err)
 
