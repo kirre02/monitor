@@ -29,7 +29,7 @@ func (sh *SiteHandler) AddSite(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	util.ToJson(w, addSite, http.StatusCreated)
+	util.ToJson(w, addSite, http.StatusOK)
 }
 
 func (sh *SiteHandler) GetSite(w http.ResponseWriter, r *http.Request) {
@@ -79,7 +79,7 @@ func (sh *SiteHandler) Routes() chi.Router {
 	r.Get("/get/{id}", sh.GetSite)
 	r.Get("/list", sh.ListSites)
 	r.Post("/add", sh.AddSite)
-	r.Delete("/del/{id}", sh.DeleteSite)
+	r.Delete("/delete/{id}", sh.DeleteSite)
 
 	return r
 }
