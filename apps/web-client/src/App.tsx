@@ -1,4 +1,4 @@
-import SiteList from './components/sites'
+import SiteList from './components/SiteList'
 
 function App() {
 

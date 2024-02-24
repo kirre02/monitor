@@ -9,11 +9,11 @@ import { AddSiteRequest } from "monitor-sdk/apis/SiteApi";
 function AddForm() {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    url: ''
+    name: "",
+    url: "",
   });
 
-  const {siteApi} = createAPIBridge();
+  const { siteApi } = createAPIBridge();
   const queryClient = useQueryClient();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -42,9 +42,9 @@ function AddForm() {
         siteAddRequest: {
           name: formData.name,
           url: formData.url,
-        }
+        },
       };
-  
+
       await siteApi.addSite(siteRequest);
       setIsOpen(false);
     },
@@ -54,31 +54,43 @@ function AddForm() {
     },
   });
 
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
   return (
     <div>
       <button
+        aria-label="Add Site"
         className="fixed bottom-8 right-8 z-10 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
         onClick={() => setIsOpen(true)}
       >
         <PlusCircleIcon className="h-5 w-5" />
       </button>
-      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="fixed inset-0 z-10 overflow-y-auto flex items-center justify-center">
+      <Dialog
+        as="div"
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        className="fixed inset-0 z-10 overflow-y-auto flex items-center justify-center"
+      >
         <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
         <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full relative z-20">
-          <Dialog.Title className="text-lg font-semibold mb-4">Add Site</Dialog.Title>
-          <Dialog.Description>
+          <Dialog.Title as="h3" className="text-lg font-semibold mb-4">
+            Add Site
+          </Dialog.Title>
+          <Dialog.Panel>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Name
+                </label>
                 <input
                   type="text"
                   id="name"
@@ -89,7 +101,12 @@ function AddForm() {
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="url" className="block text-sm font-medium text-gray-700">URL</label>
+                <label
+                  htmlFor="url"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  URL
+                </label>
                 <input
                   type="url"
                   id="url"
@@ -107,7 +124,7 @@ function AddForm() {
                 Submit
               </button>
             </form>
-          </Dialog.Description>
+          </Dialog.Panel>
         </div>
       </Dialog>
     </div>
