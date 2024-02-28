@@ -39,7 +39,11 @@ func main() {
 		Svc: siteSvc,
 	}
 
-	checkSvc := check.NewCheckService(db)
+	checkSvc, err := check.NewCheckService(db)
+	if err != nil {
+		return
+	}
+
 	checkHandler := &check.CheckHandler{
 		Svc: checkSvc,
 	}

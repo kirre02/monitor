@@ -18,19 +18,22 @@ type Service struct {
 }
 
 // Function to initialize the Service with a valid DB connection
-func NewCheckService(db *sqlx.DB) *Service {
+func NewCheckService(db *sqlx.DB) (*Service, error) {
 	checkService := &Service{DB: db, Cron: cron.New()}
 
-	checkService.Cron.AddFunc("0 */30 * * *", func() {
+	err := checkService.Cron.AddFunc("0 */30 * * *", func() {
 		err := checkService.CheckAll(context.Background())
 		if err != nil {
 			log.Errorf("difficulty running CheckAll, %s", err)
 		}
 	})
+	if err != nil {
+		return nil, err
+	}
 
 	checkService.Cron.Start()
 
-	return checkService
+	return checkService, nil
 }
 
 func (s *Service) StopCron() {
@@ -74,8 +77,8 @@ func (s *Service) Check(ctx context.Context, siteID int) (*PingResponse, error) 
 }
 
 func (s *Service) CheckAll(ctx context.Context) error {
-    log.Infof("Running CheckAll at: %s", time.Now().Format(time.RFC3339))
-    // initialize Site Service
+	log.Infof("Running CheckAll at: %s", time.Now().Format(time.RFC3339))
+	// initialize Site Service
 	siteSvc := service.NewSiteService(s.DB)
 	// Get all the tracked sites
 	resp, err := siteSvc.List(ctx)
