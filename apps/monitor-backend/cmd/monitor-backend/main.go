@@ -41,9 +41,9 @@ func main() {
 
 	checkSvc, err := check.NewCheckService(db)
 	if err != nil {
+    log.Errorf("failed creatubg checkservice: %v", err)
 		return
 	}
-
 	checkHandler := &check.CheckHandler{
 		Svc: checkSvc,
 	}

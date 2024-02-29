@@ -100,5 +100,3 @@ func (s *Service) CheckAll(ctx context.Context) error {
 	}
 	return g.Wait()
 }
-
-// TODO: add a cron job that will use the CheckAll function every hour or so

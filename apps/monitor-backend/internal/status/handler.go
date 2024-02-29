@@ -13,7 +13,6 @@ type StatusHandler struct {
 
 func (sh *StatusHandler) StatusHandler(w http.ResponseWriter, r *http.Request) {
 	statusResponse, err := sh.Svc.Status(r.Context())
-
 	if err != nil {
 		http.Error(w, "failed to check all sites", http.StatusInternalServerError)
 		return
