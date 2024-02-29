@@ -73,7 +73,9 @@ func main() {
 	go runMigrations(config.DatabaseUrl, config.MigrationPath)
 
 	log.Infof("Starting server at: %s", address)
-	log.Fatal(srv.ListenAndServe())
+	if err := srv.ListenAndServe(); err != nil {
+		log.Fatalf("server error: %s", err)
+	}
 
 	// Whenever the main function exits, stop the checkservice
 	checkSvc.StopCron()
