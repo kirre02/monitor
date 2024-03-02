@@ -70,7 +70,7 @@ func main() {
 		IdleTimeout:       15 * time.Second,
 	}
 
-	go runMigrations(config.DatabaseUrl, config.MigrationPath)
+    go runMigrations(config.DatabaseUrl, config.MigrationPath) //nolint:errcheck
 
 	log.Infof("Starting server at: %s", address)
 	if err := srv.ListenAndServe(); err != nil {
