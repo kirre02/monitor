@@ -39,7 +39,11 @@ func main() {
 		Svc: siteSvc,
 	}
 
-	checkSvc := check.NewCheckService(db)
+	checkSvc, err := check.NewCheckService(db)
+	if err != nil {
+    log.Errorf("failed creatubg checkservice: %v", err)
+		return
+	}
 	checkHandler := &check.CheckHandler{
 		Svc: checkSvc,
 	}
@@ -66,10 +70,12 @@ func main() {
 		IdleTimeout:       15 * time.Second,
 	}
 
-	go runMigrations(config.DatabaseUrl, config.MigrationPath)
+    go runMigrations(config.DatabaseUrl, config.MigrationPath) //nolint:errcheck
 
 	log.Infof("Starting server at: %s", address)
-	log.Fatal(srv.ListenAndServe())
+	if err := srv.ListenAndServe(); err != nil {
+		log.Fatalf("server error: %s", err)
+	}
 
 	// Whenever the main function exits, stop the checkservice
 	checkSvc.StopCron()
